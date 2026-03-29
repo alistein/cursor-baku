@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+:root {
+  --background: #161312;
+  --foreground: #f2f2f2;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Fonts */
+  --font-sans: var(--font-space-grotesk);
+  --font-ibm: var(--font-ibm-plex-sans);
+
+  /* Cursor Baku design tokens */
+  --color-cursor-bg: #161312;
+  --color-cursor-card: #221f1e;
+  --color-cursor-border: #41403e;
+  --color-cursor-primary: #f2f2f2;
+  --color-cursor-secondary: #707070;
+  --color-cursor-orange: #f54e00;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

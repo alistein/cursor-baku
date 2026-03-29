@@ -1,0 +1,5 @@
+# Wrangler local variables can live in `.dev.vars`.
+# This project currently uses Cloudflare bindings from `wrangler.jsonc`
+# and does not require server-only environment variables by default.
+#
+# Never commit a real `.dev.vars` file.

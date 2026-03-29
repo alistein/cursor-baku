@@ -1,0 +1,29 @@
+{
+  // D1: keep the public name, but replace `database_id` with your Cloudflare dashboard UUID.
+  // See docs/cloudflare-bindings.md before deploying a fork.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cursor-baku-landing",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-04-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "CursorBakuDB",
+      "database_name": "cusor-community-baku",
+      "database_id": "<YOUR_D1_DATABASE_ID>"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "CursorBakuBucket",
+      "bucket_name": "cursor-baku-bucket"
+    }
+  ]
+}
