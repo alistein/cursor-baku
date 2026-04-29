@@ -16,7 +16,7 @@ export const JOIN_CARDS: JoinCardConfig[] = [
     description:
       "Subscribe to our Luma calendar to stay informed about upcoming meetups, events, and hackathons in Baku.",
     ctaLabel: "Join on Luma",
-    href: "https://luma.com/cursorcommunity",
+    href: "https://luma.com/cursor-azerbaijan",
   },
   {
     platform: "telegram",

@@ -32,7 +32,7 @@ export const defaultFooterConfig: FooterConfig = {
   ],
   joinUs: [
     { label: "Telegram", href: "/telegram" },
-    { label: "Luma", href: "https://luma.com/cursorcommunity" },
+    { label: "Luma", href: "https://luma.com/cursor-azerbaijan" },
     { label: "Luhive", href: "https://luhive.com/c/cursor-baku" },
   ],
   cursor: [

@@ -17,7 +17,7 @@
     {
       "binding": "CursorBakuDB",
       "database_name": "cusor-community-baku",
-      "database_id": "<YOUR_D1_DATABASE_ID>"
+      "database_id": "",
     }
   ],
   "r2_buckets": [
