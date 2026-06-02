@@ -102,7 +102,7 @@ function FooterLegalMobile({ cfg }: { cfg: FooterConfig }) {
 const wordmarkGradient =
   "bg-gradient-to-b from-[#707070] to-[#080808] bg-clip-text text-transparent";
 
-function FooterBrandBlock({ label, cfg }: { label: string; cfg: FooterConfig }) {
+function FooterBrandBlock({ label }: { label: string }) {
   return (
     <div className="pointer-events-none relative w-full overflow-hidden">
       {/* Bottom “tucked under” the viewport: clip + slight downward bleed */}
@@ -110,27 +110,21 @@ function FooterBrandBlock({ label, cfg }: { label: string; cfg: FooterConfig }) 
         <div className="flex w-full flex-col items-center">
           {/* Credits above the large “Cursor” wordmark */}
           <div className="pointer-events-auto relative z-10 mx-auto mb-4 w-full max-w-[min(100%,36rem)] shrink-0 px-[max(1rem,4vw)] text-center md:mb-6 md:px-[80px]">
-            <p className="text-balance font-ibm text-[14px] leading-normal tracking-[-0.32px] text-cursor-secondary md:text-[14px] md:tracking-[-0.36px]">
-              Made by{" "}
-              <a
-                href={cfg.creditsAliHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cursor-secondary underline decoration-cursor-secondary/60 underline-offset-2 transition-colors hover:text-cursor-primary"
-              >
-                Ali
-              </a>
-              {" "}
-              & Designed by{" "}
-              <a
-                href={cfg.creditsNilufarHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cursor-secondary underline decoration-cursor-secondary/60 underline-offset-2 transition-colors hover:text-cursor-primary"
-              >
-                Nilufar
-              </a>
-            </p>
+            <a
+              href="https://luhive.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 font-ibm text-[14px] leading-normal tracking-[-0.32px] text-cursor-secondary transition-colors hover:text-cursor-primary focus-visible:text-cursor-primary focus-visible:outline-none md:tracking-[-0.36px]"
+            >
+              <span>Powered by</span>
+              <Image
+                src="/DesktopLogo.svg"
+                alt="Luhive"
+                width={94}
+                height={19}
+                className="h-[15px] w-auto opacity-90 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+              />
+            </a>
           </div>
 
           {/* Wordmark: clipped at bottom — full width left-aligned on mobile, centered on desktop */}
@@ -224,7 +218,11 @@ export default function Footer(props: FooterProps) {
                       />
                     </span>
                     <span className="whitespace-nowrap font-ibm text-[16px] font-medium leading-[1.5] tracking-[-0.32px] text-cursor-primary">
-                      {isSubmitting ? "Sending..." : status === "success" ? "Done!" : "Get Updates"}
+                      {isSubmitting
+                        ? "Sending..."
+                        : status === "success"
+                          ? "Done!"
+                          : "Get Updates"}
                     </span>
                   </button>
                 </form>
@@ -256,7 +254,7 @@ export default function Footer(props: FooterProps) {
       </div>
 
       <div className="relative z-20 -mt-4 overflow-hidden md:-mt-24">
-        <FooterBrandBlock label={cfg.brandWordmark} cfg={cfg} />
+        <FooterBrandBlock label={cfg.brandWordmark} />
       </div>
     </footer>
   );
