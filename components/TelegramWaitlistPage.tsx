@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "./Navbar";
-import { useSubscribeForm } from "./useSubscribeForm";
+import { SubscribeFormPill } from "./SubscribeFormPill";
 
 const processSteps = [
   "Opening the first invite list.",
@@ -24,47 +24,6 @@ function TelegramIcon() {
   );
 }
 
-function TelegramSubscribeForm() {
-  const { email, handleEmailChange, handleSubmit, isSubmitting, message, status } =
-    useSubscribeForm("You're on the early Telegram list. We'll send the invite first.");
-
-  return (
-    <div className="flex w-full flex-col gap-3">
-      <form
-        onSubmit={handleSubmit}
-        className="flex h-16 w-full items-center justify-between rounded-[1000px] border border-cursor-border bg-cursor-card py-2 pl-6 pr-2"
-      >
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={handleEmailChange}
-          disabled={isSubmitting}
-          required
-          className="min-w-0 flex-1 bg-transparent font-ibm text-[18px] leading-normal tracking-[-0.36px] text-cursor-primary outline-none placeholder:text-cursor-secondary disabled:opacity-60"
-        />
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="flex h-full shrink-0 items-center justify-center gap-3 rounded-[50px] bg-cursor-bg px-5 py-3 transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          <span className="size-3 rounded-full bg-cursor-orange" aria-hidden />
-          <span className="whitespace-nowrap font-ibm text-[16px] font-medium leading-normal tracking-[-0.32px] text-cursor-primary">
-            {isSubmitting ? "Sending..." : status === "success" ? "Done!" : "Get Updates"}
-          </span>
-        </button>
-      </form>
-      {message ? (
-        <p
-          aria-live="polite"
-          className={`font-ibm text-[14px] tracking-[-0.28px] ${status === "success" ? "text-green-400" : "text-red-400"}`}
-        >
-          {message}
-        </p>
-      ) : null}
-    </div>
-  );
-}
 
 export default function TelegramWaitlistPage() {
   return (
@@ -90,7 +49,10 @@ export default function TelegramWaitlistPage() {
               </p>
             </div>
             <div className="max-w-[540px]">
-              <TelegramSubscribeForm />
+              <SubscribeFormPill
+                successMessage="You're on the early Telegram list. We'll send the invite first."
+                pillClassName="h-16 w-full py-2 pl-6 pr-2"
+              />
             </div>
           </div>
 

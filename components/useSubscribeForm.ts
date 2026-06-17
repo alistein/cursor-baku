@@ -1,58 +1,39 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
-
-type SubscribeStatus = "idle" | "loading" | "success" | "error";
+import { useActionState, useOptimistic, useEffect, useRef } from "react";
+import { subscribeAction, type SubscribeState } from "@/app/actions/subscribe";
 
 export function useSubscribeForm(successMessage = "You're in! We'll keep you posted.") {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<SubscribeStatus>("idle");
-  const [message, setMessage] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+  const initial: SubscribeState = { status: "idle", message: "" };
 
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-    if (status !== "idle") {
-      setStatus("idle");
-      setMessage("");
-    }
-  };
+  const [state, formAction, isPending] = useActionState(
+    (prev: SubscribeState, fd: FormData) => subscribeAction(prev, fd, successMessage),
+    initial,
+  );
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (status === "loading") return;
+  const [optimistic, addOptimistic] = useOptimistic(
+    state,
+    (_cur: SubscribeState, next: SubscribeState["status"]): SubscribeState => ({
+      status: next,
+      message: successMessage,
+    }),
+  );
 
-    setStatus("loading");
-    setMessage("");
+  function action(formData: FormData) {
+    addOptimistic("success");
+    return formAction(formData);
+  }
 
-    try {
-      const response = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = (await response.json().catch(() => ({}))) as { error?: string };
-
-      if (response.ok) {
-        setStatus("success");
-        setMessage(successMessage);
-        setEmail("");
-        return;
-      }
-
-      setStatus("error");
-      setMessage(data.error ?? "Something went wrong. Please try again.");
-    } catch {
-      setStatus("error");
-      setMessage("Something went wrong. Please try again.");
-    }
-  };
+  useEffect(() => {
+    if (state.status === "success") formRef.current?.reset();
+  }, [state.status]);
 
   return {
-    email,
-    handleEmailChange,
-    handleSubmit,
-    isSubmitting: status === "loading",
-    message,
-    status,
+    formRef,
+    action,
+    status: optimistic.status,
+    message: optimistic.message,
+    isPending,
   };
 }

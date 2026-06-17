@@ -3,7 +3,7 @@
 import Image from "next/image";
 import FooterLink from "./FooterLink";
 import { footerConfig, type FooterConfig, type FooterNavItem } from "./footerConfig";
-import { useSubscribeForm } from "../useSubscribeForm";
+import { SubscribeFormPill } from "../SubscribeFormPill";
 
 export type FooterProps = Partial<
   Pick<
@@ -170,9 +170,6 @@ export default function Footer(props: FooterProps) {
     cursor: props.cursor,
   });
 
-  const { email, handleEmailChange, handleSubmit, isSubmitting, message, status } =
-    useSubscribeForm();
-
   return (
     <footer className="relative overflow-x-hidden overflow-y-visible bg-cursor-bg pt-[60px] pb-0">
       <div className="relative z-10 mx-auto max-w-[1440px] px-5 pb-[70px] md:px-[80px]">
@@ -188,53 +185,10 @@ export default function Footer(props: FooterProps) {
                   {cfg.newsletterDescription}
                 </p>
               </div>
-              <div className="flex w-full flex-col gap-3">
-                <form
-                  id="footer-updates"
-                  onSubmit={handleSubmit}
-                  className="flex h-16 w-full items-center justify-between rounded-[1000px] border border-cursor-border bg-cursor-card py-2 pl-6 pr-2"
-                >
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={handleEmailChange}
-                    disabled={isSubmitting}
-                    required
-                    className="min-w-0 flex-1 bg-transparent font-ibm text-[18px] leading-[1.5] text-cursor-primary placeholder:text-cursor-secondary tracking-[-0.36px] outline-none disabled:opacity-60"
-                  />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex h-full shrink-0 items-center justify-center gap-3 rounded-[50px] bg-cursor-bg px-5 py-3 transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    <span className="relative size-3 shrink-0">
-                      <Image
-                        src="/footer-email-dot.svg"
-                        alt=""
-                        width={12}
-                        height={12}
-                        className="size-3 object-contain"
-                      />
-                    </span>
-                    <span className="whitespace-nowrap font-ibm text-[16px] font-medium leading-[1.5] tracking-[-0.32px] text-cursor-primary">
-                      {isSubmitting
-                        ? "Sending..."
-                        : status === "success"
-                          ? "Done!"
-                          : "Get Updates"}
-                    </span>
-                  </button>
-                </form>
-                {message ? (
-                  <p
-                    aria-live="polite"
-                    className={`font-ibm text-[14px] tracking-[-0.28px] ${status === "success" ? "text-green-400" : "text-red-400"}`}
-                  >
-                    {message}
-                  </p>
-                ) : null}
-              </div>
+              <SubscribeFormPill
+                formId="footer-updates"
+                pillClassName="h-16 w-full py-2 pl-6 pr-2"
+              />
             </div>
 
             <div className="flex w-full flex-wrap items-start justify-start gap-x-[74px] gap-y-10 lg:w-auto lg:flex-nowrap lg:justify-end">

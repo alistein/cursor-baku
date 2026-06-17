@@ -2,12 +2,9 @@
 
 import Image from "next/image";
 import Navbar from "./Navbar";
-import { useSubscribeForm } from "./useSubscribeForm";
+import { SubscribeFormPill } from "./SubscribeFormPill";
 
 export default function Hero() {
-  const { email, handleEmailChange, handleSubmit, isSubmitting, message, status } =
-    useSubscribeForm();
-
   return (
     <section className="relative min-h-screen overflow-hidden bg-cursor-bg">
       {/* ── Map: desktop ── */}
@@ -24,7 +21,8 @@ export default function Hero() {
           src="/azerbaijan-dotted-map.webp"
           alt=""
           fill
-          sizes="1120px"
+          sizes="(max-width: 1280px) 100vw, 1120px"
+          quality={80}
           className="object-fill"
           priority
         />
@@ -40,6 +38,7 @@ export default function Hero() {
           alt=""
           fill
           sizes="170vw"
+          quality={70}
           className="object-contain object-top-left"
           priority
         />
@@ -73,39 +72,11 @@ export default function Hero() {
           </p>
 
           {/* Email sign-up — full width on mobile */}
-          <form
-            id="updates"
-            onSubmit={handleSubmit}
-            className="mt-10 md:mt-[50px] flex items-center justify-between w-full md:max-w-[500px] h-[62px] md:h-[64px] bg-cursor-card border border-cursor-border rounded-[1000px] pl-5 md:pl-6 pr-[6px] md:pr-2 py-[6px] md:py-2"
-          >
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={handleEmailChange}
-              disabled={isSubmitting}
-              required
-              className="flex-1 min-w-0 bg-transparent font-ibm text-[14px] md:text-[18px] text-cursor-primary placeholder:text-cursor-secondary tracking-[-0.28px] md:tracking-[-0.36px] leading-normal outline-none disabled:opacity-60"
-            />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex items-center gap-[10px] md:gap-3 shrink-0 h-full px-5 rounded-[50px] bg-cursor-bg hover:bg-cursor-card transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              <span className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-cursor-orange shrink-0" />
-              <span className="font-ibm font-medium text-[14px] md:text-[16px] text-cursor-primary tracking-[-0.28px] md:tracking-[-0.32px] leading-normal whitespace-nowrap">
-                {isSubmitting ? "Sending..." : status === "success" ? "Done!" : "Get Updates"}
-              </span>
-            </button>
-          </form>
-          {message ? (
-            <p
-              aria-live="polite"
-              className={`mt-3 font-ibm text-[14px] tracking-[-0.28px] ${status === "success" ? "text-green-400" : "text-red-400"}`}
-            >
-              {message}
-            </p>
-          ) : null}
+          <SubscribeFormPill
+            formId="updates"
+            className="mt-10 md:mt-[50px] w-full md:max-w-[500px]"
+            pillClassName="h-[62px] md:h-[64px] pl-5 md:pl-6 pr-[6px] md:pr-2 py-[6px] md:py-2"
+          />
         </div>
       </div>
     </section>
